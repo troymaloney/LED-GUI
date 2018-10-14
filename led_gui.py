@@ -5,6 +5,8 @@ import serial
 
 small_text = ("Lucida\ Console", 12)
 
+serial_port = "/dev/ttyACM0"
+
 class ColorChanger:
 
     def __init__(self, parent):
@@ -27,7 +29,7 @@ class ColorChanger:
         self.green_ON = True
 
         try:
-            self.ser = serial.Serial('COM3', 9600)
+            self.ser = serial.Serial(serial_port, 9600)
         except serial.serialutil.SerialException:
             print "Plug in your Dweeno."
             self.no_dweeno = True
