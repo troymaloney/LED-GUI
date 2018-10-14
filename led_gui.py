@@ -141,6 +141,8 @@ class ColorChanger:
                 print self.create_string()
             else:
                 self.ser.write(self.create_string() )
+                
+            print color+': '+str(self.val_dict[color] )
             
             self.on_dict[color] = False
             
@@ -155,6 +157,8 @@ class ColorChanger:
                 print self.create_string()
             else:
                 self.ser.write(self.create_string() )
+                
+            print color+': '+str(self.val_dict[color] )
             
             self.on_dict[color] = True
 
