@@ -88,7 +88,7 @@ class ColorChanger:
         # sliders, val displays, toggles, 
         self.slider_dict = {'red':self.slider_red, 'blue':self.slider_blue, 'green':self.slider_green}        
         self.val_display_dict = {'red':self.red_val_display,'blue':self.blue_val_display,'green':self.green_val_display}
-        self.etoggle_dict = {'red':self.toggle_red,'blue':self.toggle_blue,'green':self.toggle_green}
+        self.toggle_dict = {'red':self.toggle_red,'blue':self.toggle_blue,'green':self.toggle_green}
 
 # --FUNCTINOS-- #
     def create_string(self):
