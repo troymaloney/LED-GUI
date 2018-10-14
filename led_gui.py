@@ -82,7 +82,7 @@ class ColorChanger:
 
 # --FUNCTINOS-- #
     def create_string(self):
-        return str(self.red_val)+','+str(self.blue_val)+','+str(self.green_val)+'>'
+        return str(self.red_val)+','+str(self.green_val)+','+str(self.blue_val)+'>'
     
     def scale_for_display(self, value):
         sf = 11./255
