@@ -28,9 +28,10 @@ class ColorChanger:
         self.blue_ON = True
         self.green_ON = True
         
-        self.val_dict = {'red':self.red_val, 'blue':self.blue_val, 'green':self.green_val}
-        self.old_dict = {'red':self.old_red, 'blue':self.old_blue, 'green':self.old_green}
-        self.on_dict = {'red':self.red_ON, 'blue':self.blue_ON, 'green':self.green_ON}
+        # For use with ColorChanger class's __dict__ attribute to change the instance attributes above
+        self.val_dict = {'red':"red_val", 'blue':"blue_val", 'green':"green_val"}
+        self.old_dict = {'red':"old_red", 'blue':'old_blue', 'green':'old_green'}
+        self.on_dict = {'red':'red_ON', 'blue':'blue_ON', 'green':'green_ON'}
 
         try:
             self.ser = serial.Serial(serial_port, 9600)
@@ -129,11 +130,12 @@ class ColorChanger:
 
     def deactivate_color(self, color):
     
-        if self.on_dict[color]:
-            self.val_dict[color] = 0
-            self.old_dict[color] = self.slider_dict[color].get()
+        if self.__dict__[self.on_dict[color] ]: #   you have to do this dicts-within-dicts stuff to change the instance attrs 
+                                                #   without explicitly referring to them
+            self.__dict__[self.val_dict[color] ] = 0
+            self.__dict__[self.old_dict[color] ] = self.slider_dict[color].get()
             
-            self.val_display_dict[color].config(text=self.scale_for_display(self.val_dict[color] ) )
+            self.val_display_dict[color].config(text=self.scale_for_display(self.__dict__[self.val_dict[color] ] ) )
             self.slider_dict[color].config(state=tk.DISABLED, sliderrelief=tk.SUNKEN, relief=tk.RIDGE)
             self.toggle_dict[color].config(relief=tk.SUNKEN, text='Off')
             
@@ -141,15 +143,13 @@ class ColorChanger:
                 print self.create_string()
             else:
                 self.ser.write(self.create_string() )
-                
-            print color+': '+str(self.val_dict[color] )
             
-            self.on_dict[color] = False
+            self.__dict__[self.on_dict[color] ] = False
             
         else:
-            self.val_dict[color] = self.old_dict[color]
+            self.__dict__[self.val_dict[color] ] = self.__dict__[self.old_dict[color] ]
             
-            self.val_display_dict[color].config(text=self.scale_for_display(self.val_dict[color]))
+            self.val_display_dict[color].config(text=self.scale_for_display(self.__dict__[self.val_dict[color]]))
             self.slider_dict[color].config(state=tk.NORMAL, sliderrelief=tk.RAISED, relief=tk.FLAT)
             self.toggle_dict[color].config(relief=tk.RAISED, text="On")
             
@@ -157,86 +157,8 @@ class ColorChanger:
                 print self.create_string()
             else:
                 self.ser.write(self.create_string() )
-                
-            print color+': '+str(self.val_dict[color] )
             
-            self.on_dict[color] = True
-
-#            else:
-#                self.red_val = self.old_red
-#                
-#                self.red_val_display.config(text=self.scale_for_display(self.red_val))
-#                self.slider_red.config(state=tk.NORMAL, sliderrelief=tk.RAISED, relief=tk.FLAT)
-#                self.toggle_red.config(relief=tk.RAISED, text='On')
-#                
-#                if self.no_dweeno:
-#                    print self.create_string()
-#                else:
-#                    self.ser.write(self.create_string())
-#                
-#                self.red_ON = True
-
-#        elif color == 'blue':
-#            if self.blue_ON:
-#                self.blue_val = 0
-#                self.old_blue = self.slider_blue.get()
-
-#                self.blue_val_display.config(text=self.scale_for_display(self.blue_val))
-#                self.slider_blue.config(state=tk.DISABLED, sliderrelief=tk.SUNKEN, relief=tk.RIDGE)
-#                self.toggle_blue.config(relief=tk.SUNKEN, text='Off')
-
-#                if self.no_dweeno:
-#                    print self.create_string()
-#                else:
-#                    self.ser.write(self.create_string())
-
-#                self.blue_ON = False
-
-#            else:
-#                self.blue_val = self.old_blue
-#                
-#                self.blue_val_display.config(text=self.scale_for_display(self.blue_val))
-#                self.slider_blue.config(state=tk.NORMAL, sliderrelief=tk.RAISED, relief=tk.FLAT)
-#                self.toggle_blue.config(relief=tk.RAISED, text='On')
-#                
-#                if self.no_dweeno:
-#                    print self.create_string()
-#                else:
-#                    self.ser.write(self.create_string())
-#                
-#                self.blue_ON = True
-#             
-#        elif color == 'green':
-#            if self.green_ON:
-#                self.green_val = 0
-#                self.old_green = self.slider_green.get()
-
-#                self.green_val_display.config(text=self.scale_for_display(self.green_val))
-#                self.slider_green.config(state=tk.DISABLED, sliderrelief=tk.SUNKEN, relief=tk.RIDGE)
-#                self.toggle_green.config(relief=tk.SUNKEN, text='Off')
-
-#                if self.no_dweeno:
-#                    print self.create_string()
-#                else:
-#                    self.ser.write(self.create_string())
-
-#                self.green_ON = False
-
-#            else:
-#                self.green_val = self.old_green
-#                
-#                self.green_val_display.config(text=self.scale_for_display(self.green_val))
-#                self.slider_green.config(state=tk.NORMAL, sliderrelief=tk.RAISED, relief=tk.FLAT)
-#                self.toggle_green.config(relief=tk.RAISED, text='On')
-#                
-#                if self.no_dweeno:
-#                    print self.create_string()
-#                else:
-#                    self.ser.write(self.create_string())
-#                
-#                self.green_ON = True
-
-
+            self.__dict__[self.on_dict[color] ] = True
 
 root = tk.Tk()
 app = ColorChanger(root)
